@@ -1,9 +1,17 @@
 import supabase from "../DB/db.js";
 
-export async function getAllUsersFromDB() {
+
+export async function findUserByUsernameAndPassword(username, password) {
   const { data, error } = await supabase
-  .from("users")
-  .select("*");
-  if (error) throw error;
+    .from('Users')
+    .select('*')
+    .eq('username', username)
+    .eq('password', password)
+    .single();
+
+  if (error) {
+    return null;
+  }
+
   return data;
 }
